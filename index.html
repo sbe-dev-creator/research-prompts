@@ -1,3 +1,4 @@
+
 <!doctype html>
 <html lang="en">
 <head>
@@ -414,6 +415,47 @@ function copyText(text) {
   });
 }
 function toast(msg) { const el = document.getElementById('toast'); el.textContent = msg; el.classList.add('show'); setTimeout(()=>el.classList.remove('show'), 1500); }
+
+const FIELD_HINTS = {
+  "[PRODUCT CATEGORY]": "e.g. Analytics & BI, Data Integration, Data Quality",
+  "[TOPIC AREA]": "e.g. AI adoption, data governance, self-service analytics",
+  "[INDUSTRY]": "e.g. Manufacturing, Financial Services, Retail",
+  "[INDUSTRY/VERTICAL]": "e.g. Manufacturing, Financial Services, Healthcare",
+  "[INDUSTRY/PRODUCT CATEGORY]": "e.g. retail analytics, manufacturing BI, data integration",
+  "[INDUSTRY/PERSONA]": "e.g. manufacturing CDOs, retail CIOs, finance leaders",
+  "[PERSONA]": "e.g. CDO, CIO, Head of Analytics",
+  "[PERSONA/INDUSTRY]": "e.g. CDOs in banking, CIOs in manufacturing",
+  "[REGION]": "e.g. France, DACH, Benelux",
+  "[REGION/TERRITORY]": "e.g. UKI, DACH, Nordics",
+  "[REGION/COUNTRY]": "e.g. France, Germany, UAE",
+  "[REGION/INDUSTRY]": "e.g. EU financial services, UK public sector",
+  "[TERRITORY]": "e.g. France, Benelux, MEA",
+  "[TERRITORY/REGION]": "e.g. EMEA, Nordics, France",
+  "[TERRITORY/INDUSTRY]": "e.g. DACH manufacturing, UK financial services",
+  "[COMPANY NAME]": "e.g. Siemens, BNP Paribas, Novartis",
+  "[LOCATION]": "e.g. Paris, Munich, London",
+  "[COMPANY SIZE/SEGMENT]": "e.g. enterprise, mid-market, global accounts",
+  "[TARGET DEPARTMENT]": "e.g. Data & Analytics, IT, Finance",
+  "[TARGET DEPARTMENT/FUNCTION]": "e.g. Data & Analytics, IT, Operations",
+  "[COMPETITOR NAME(S)]": "e.g. Tableau, Power BI, Informatica",
+  "[OUR COMPANY]": "e.g. Qlik",
+  "[OUR COMPANY/PRODUCT CATEGORY]": "e.g. Qlik Analytics, Qlik Data Integration",
+  "[OUR PRODUCT/THEME]": "e.g. Trusted AI, Open Lakehouse, Data Products",
+  "[CAMPAIGN GOAL]": "e.g. drive registrations, create pipeline, re-engage accounts",
+  "[CAMPAIGN TYPE]": "e.g. event campaign, ABM play, executive webinar",
+  "[PLATFORM]": "e.g. LinkedIn, email, YouTube",
+  "[TIMEFRAME]": "e.g. last 90 days, last 6 months, next 2 quarters",
+  "[QUARTER/YEAR]": "e.g. Q3 2026, H2 2026",
+  "[NUMBER]": "e.g. 10, 25, 50",
+  "[LIST ACCOUNTS]": "e.g. paste your target account list",
+  "[EXISTING ACCOUNTS]": "e.g. paste accounts to exclude",
+  "[RELEVANT INITIATIVE]": "e.g. AI programme, cloud migration, data modernisation",
+  "[PROBLEM/PRODUCT CATEGORY]": "e.g. data silos, analytics modernisation, AI readiness"
+};
+function getFieldHint(ph, clean) {
+  return FIELD_HINTS[ph] || `e.g. ${clean.toLowerCase()}`;
+}
+
 function openDrawer(id) {
   currentPrompt = byId[id];
   drawerTitle.textContent = currentPrompt.title;
@@ -428,7 +470,8 @@ function openDrawer(id) {
       const clean = ph.replace(/[\[\]]/g,'');
       const field = document.createElement('div');
       field.className = 'field';
-      field.innerHTML = `<label>${escapeHTML(clean)}</label><input data-placeholder="${escapeHTML(ph)}" placeholder="Enter ${escapeHTML(clean.toLowerCase())}" />`;
+      const hint = getFieldHint(ph, clean);
+      field.innerHTML = `<label>${escapeHTML(clean)}</label><input data-placeholder="${escapeHTML(ph)}" placeholder="${escapeHTML(hint)}" />`;
       fieldWrap.appendChild(field);
     });
   }
