@@ -350,7 +350,7 @@ function renderCalendar() {
         <button class="action primary" data-action="view">View prompt</button>
         <button class="action" data-action="copy">Copy raw</button>
         <button class="action" data-action="customise">Customise</button>
-        <button class="action ${done ? 'done' : ''}" data-action="done">${done ? 'Tried' : 'Mark tried'}</button>
+        <button class="action ${done ? 'done' : ''}" data-action="done">${done ? 'Tried' : 'Mark as tried'}</button>
       </div>
       <div class="prompt-preview">${highlightPlaceholders(p.prompt)}</div>`;
     calendarGrid.appendChild(card);
@@ -410,7 +410,7 @@ function updateProgress() {
     if (!btn) return;
     const done = !!completed[card.dataset.id];
     btn.classList.toggle('done', done);
-    btn.textContent = done ? 'Tried' : 'Mark tried';
+    btn.textContent = done ? 'Tried' : 'Mark as tried';
   });
 }
 function copyText(text) {
